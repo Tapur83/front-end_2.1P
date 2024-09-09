@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter signup form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Newsletter signup form</h1>
+
+        <form action="/" method="POST" id="signUpForm">
+            <label for="Fname">First name</label>
+            <input type="text" id="Fname" name="Fname">
+
+            <br>
+
+            <label for="Lname">Last name</label>
+            <input type="text" id="Lname" name="Lname">
+            <br>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email">
+
+            <br>
+
+            <button type="submit">subscribe</button>
+
+        </form>
+        <div id="result1" class="result1"></div>
+    </div>
+
+    <script>
+        document.getElementById('signUpForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var Fname =(document.getElementById('Fname').value);
+            var Lname =(document.getElementById('Lname').value);
+            var email =(document.getElementById('email').value);
+
+            // const formData= new FormData(document.getElementById('signUpForm'));
+            // const data= Object.fromEntries(formData.entries());
+
+            if (Fname && Lname && email) {
+                fetch('/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({Fname, Lname, email})
+                })
+                .then(response => response.json())
+                
+            
+            .then(data => {
+                document.getElementById('result1').innerHTML = `<h2>WELCOME</h2>`;
+                document.getElementById('signUpForm').reset();
+            })
+            .catch(error => {
+                document.getElementById('result1').innerHTML = `<h2>Error: error</h2>`;
+            });
+        }
+        else{
+                document.getElementById('result').innerHTML = `<h2>Please enter name and email.</h2>`;
+            }
+
+        });
+    </script>
+
+
+</body>
+</html>
